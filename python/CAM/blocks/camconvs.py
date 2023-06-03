@@ -142,8 +142,7 @@ class CAMConv(Conv2D, base.Layer):
         part copied from that layer.
 
 
-        ##这一层创建一个用于卷积的卷积核，与层输入进行卷积（实际上是互相关），产生输出张量。如果 use_bias 设置为 True（并且提供了 bias_initializer），
-        则会创建一个偏置向量并添加到输出中。最后，如果 activation 不是 None，也将应用于输出。
+    
         This layer creates a convolution kernel that is convolved
         (actually cross-correlated) with the layer input to produce a tensor of
         outputs. If `use_bias` is True (and a `bias_initializer` is provided),
@@ -209,6 +208,8 @@ class CAMConv(Conv2D, base.Layer):
                                  |.,.,.,.,.,.,.,.|
                                  |1,1,1,1,1,1,1,1|
                 ** this will be resized with 'resize_policy' to the size of every feature map.
+        
+        ##添加距离张量,(由x_coord和y_coord计算得出)
         with_r: bool
             add a channel with the r coordinate presented by Coord Conv
                 r_coord = \sqrt{x_coord^2+y_coord^2}
@@ -234,7 +235,7 @@ class CAMConv(Conv2D, base.Layer):
                         [...] ; also l_dist and b_dist
                 ## ** 每层特征曾的边界距离都会被重新计算
                 ** this will be calculated for every feature map, as every feature map has a different distance
-        ##焦距矩阵
+        ##成像视野通道
         fov_maps: bool (stands for field.of.view)
             the layer will add a Tensor with the horizontal and  vertical field of view in radians of the camera.
 
